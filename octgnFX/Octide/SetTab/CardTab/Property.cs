@@ -15,10 +15,12 @@ namespace Octide.SetTab.ItemModel
         public object _value;
         public bool _isDefined;
 
+        public bool IsRich => Property.Type == Octgn.DataNew.Entities.PropertyType.RichText;
+
         public bool IsValid => ViewModelLocator.PropertyTabViewModel.Items.Contains(Property);
 
         public CardPropertyModel()
-        { 
+        {
         }
 
         public bool IsDefined

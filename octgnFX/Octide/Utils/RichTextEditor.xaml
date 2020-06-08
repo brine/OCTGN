@@ -1,0 +1,44 @@
+﻿<!--
+* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/.s
+-->
+<UserControl x:Class="Octide.RichTextEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Octide"
+             xmlns:avalon="http://icsharpcode.net/sharpdevelop/avalonedit"
+             mc:Ignorable="d" 
+             d:DesignHeight="250" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="ToolbarButton" TargetType="{x:Type Button}" >
+            <Setter Property="Width" Value="20" />
+            <Setter Property="Height" Value="20" />
+        </Style>
+    </UserControl.Resources>
+    <DockPanel>
+        <ToolBar DockPanel.Dock="Top" >
+            <ToolBar.Resources>
+                <Style TargetType="{x:Type Image}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}, AncestorLevel=1}, Path=IsEnabled}" Value="False">
+                            <Setter Property="Opacity" Value="0.30" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ToolBar.Resources>
+            <Button Content="B" ToolTip="Bold" FontSize="12" FontWeight="ExtraBold" Style="{StaticResource ToolbarButton}"/>
+            <Button Content="I" ToolTip="Italic" FontSize="12" FontStyle="Italic" Style="{StaticResource ToolbarButton}"/>
+            <Button ToolTip="Italic" FontSize="12" Style="{StaticResource ToolbarButton}">
+                <Button.Content>
+                    <TextBlock Text="U" TextDecorations="Underline" />
+                </Button.Content>
+            </Button>
+        </ToolBar>
+        <Grid>
+            <local:RichTextEditorExtension Text="{Binding Value}" FontFamily="Consolas" />
+        </Grid>
+    </DockPanel>
+</UserControl>

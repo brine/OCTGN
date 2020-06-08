@@ -10,7 +10,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"      
              xmlns:local="clr-namespace:Octide"
              xmlns:views="clr-namespace:Octide.Views"
-             xmlns:model="clr-namespace:Octide.ItemModel"
+             xmlns:item="clr-namespace:Octide.SetTab.ItemModel"
              xmlns:gong="urn:gong-wpf-dragdrop"
              mc:Ignorable="d" 
              xmlns:params="http://schemas.codeplex.com/elysium/params"
@@ -98,12 +98,32 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Value, Mode=TwoWay}" IsEnabled="{Binding IsDefined}" >
-                                    <TextBox.Style>
-                                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource OctideInputTextBox}" />
-                                    </TextBox.Style>
-                                </TextBox>
-
+                                <ContentPresenter Content="{Binding }" Grid.Row="1" Grid.Column="1">
+                                    <ContentPresenter.Resources>
+                                        <DataTemplate x:Key="richTextProperty">
+                                            <local:RichTextEditor DataContext="{Binding }" />
+                                        </DataTemplate>
+                                        <DataTemplate x:Key="stringProperty">
+                                            <TextBox Text="{Binding Value, Mode=TwoWay}" IsEnabled="{Binding IsDefined}" >
+                                                <TextBox.Style>
+                                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource OctideInputTextBox}" />
+                                                </TextBox.Style>
+                                            </TextBox>
+                                        </DataTemplate>
+                                    </ContentPresenter.Resources>
+                                    <ContentPresenter.Style>
+                                        <Style TargetType="{x:Type ContentPresenter}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsRich}" Value="True">
+                                                    <Setter Property="ContentTemplate" Value="{StaticResource richTextProperty}" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsRich}" Value="False">
+                                                    <Setter Property="ContentTemplate" Value="{StaticResource stringProperty}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ContentPresenter.Style>
+                                </ContentPresenter>
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

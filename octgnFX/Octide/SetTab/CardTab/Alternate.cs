@@ -69,8 +69,8 @@ namespace Octide.SetTab.ItemModel
                 {
                     Property = ViewModelLocator.PropertyTabViewModel.Items.First(y => (y as PropertyItemModel)._property.Equals(prop.Key)) as PropertyItemModel,
                     _value = prop.Value,
-                    Parent = this,
-                    _isDefined = prop.Value != null
+                    _isDefined = true,
+                    Parent = this
                 });
             }
             Items.CollectionChanged += (a, b) =>
@@ -103,7 +103,7 @@ namespace Octide.SetTab.ItemModel
                 {
                     Property = ViewModelLocator.PropertyTabViewModel.Items.First(y => (y as PropertyItemModel)._property.Equals(prop.Key)) as PropertyItemModel,
                     _value = prop.Value,
-                    _isDefined = prop.Value != null,
+                    _isDefined = true,
                     Parent = this
                 });
             }
