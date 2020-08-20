@@ -6,6 +6,7 @@ using log4net;
 using Octgn.Communication;
 using Octgn.Core;
 using Octgn.Library;
+using Octgn.Library.Exceptions;
 using Octgn.Online.Hosting;
 using Octgn.Tabs.Play;
 using Octgn.ViewModels;
@@ -16,7 +17,6 @@ using System.Net;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace Octgn
 {
@@ -25,6 +25,8 @@ namespace Octgn
         private readonly static ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public Task<bool> HostGame(HostedGame hostedGame, string username, string password) {
+            DebugValidate(hostedGame, true);
+
             var args = "-h ";
 
             new HostedGameProcess(
@@ -40,7 +42,7 @@ namespace Octgn
         }
 
         public void HostGame(int? hostPort, Guid? gameId) {
-            throw new NotImplementedException();
+            throw new UserMessageException("Haven't implemented Table mode yet.");
         }
 
         public Task<bool> LaunchDeckEditor(string deckPath = null) {
@@ -60,6 +62,8 @@ namespace Octgn
             }
 
             var hostedGame = hostedGameViewModel.HostedGame;
+
+            DebugValidate(hostedGame, false);
 
             var args = "-j ";
 
@@ -90,6 +94,8 @@ namespace Octgn
                 HostAddress = $"{host}:{port}",
                 Password = password
             };
+
+            DebugValidate(hostedGame, false);
 
             var args = "-j ";
 
@@ -147,9 +153,7 @@ namespace Octgn
                     }, cts.Token);
                 }
             } catch (OperationCanceledException) {
-                Log.Warn("Engine did not show UI withing alloted time.");
-
-                MessageBox.Show("Engine appears to be frozen, please try again. If this continues to happen, let us know.", "Frozen Engine", MessageBoxButton.OK, MessageBoxImage.Error);
+                Log.Warn("Engine did not show UI withing alloted time. Probably frozen.");
 
                 try {
                     proc.Kill();
@@ -161,12 +165,27 @@ namespace Octgn
             }
 
             if (proc.HasExited) {
-                MessageBox.Show("Engine prematurely shutdown, please try again. If this continues to happen, let us know.", "Engine Shutdown", MessageBoxButton.OK, MessageBoxImage.Error);
+                Log.Warn("Engine prematurely shutdown");
 
                 return false;
             }
 
             return true;
+        }
+
+        private static void DebugValidate(HostedGame hostedGame, bool isHosting) {
+            DateTimeOffset minCreatedDate;
+            if (isHosting)
+                minCreatedDate = DateTimeOffset.UtcNow.AddMinutes(-2);
+            else
+                minCreatedDate = DateTimeOffset.UtcNow.AddHours(-6);
+
+            DateTimeOffset maxCreatedDate = DateTimeOffset.UtcNow;
+
+            Debug.Assert(hostedGame.DateCreated.UtcDateTime >= minCreatedDate, $"Hosted game DateCreated is too ancient {hostedGame.DateCreated}");
+            Debug.Assert(hostedGame.DateCreated.UtcDateTime <= maxCreatedDate, $"Hosted game DateCreated is too far in the future {hostedGame.DateCreated}");
+
+            Debug.Assert(hostedGame.Id != Guid.Empty, $"Hosted game Id is empty");
         }
     }
 }

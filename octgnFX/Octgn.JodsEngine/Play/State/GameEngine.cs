@@ -493,7 +493,11 @@ namespace Octgn
         }
 
         public void OnStart() {
-            Program.Discord.UpdateStatusInGame(Program.CurrentHostedGame, Program.IsHost, IsReplay, Spectator, false, Player.AllExceptGlobal.Count());
+            if (Program.CurrentHostedGame.DateStarted == null) {
+                Program.CurrentHostedGame.DateStarted = DateTimeOffset.Now;
+            }
+
+            Program.Discord?.UpdateStatusInGame(Program.CurrentHostedGame, Program.IsHost, IsReplay, Spectator, false, Player.AllExceptGlobal.Count());
 
             if (IsReplay) {
                 return;
@@ -650,19 +654,30 @@ namespace Octgn
             _BeginCalled = true;
             StartTime = DateTimeOffset.Now;
 
+            var client = Program.Client ?? throw new InvalidOperationException($"{nameof(Program)}.{nameof(Program.Client)} is null");
+            var localPlayer = Player.LocalPlayer ?? throw new InvalidOperationException($"{nameof(Player)}.{nameof(Player.LocalPlayer)} is null");
+            var def = Definition ?? throw new InvalidOperationException($"{nameof(GameEngine)}.{nameof(GameEngine.Definition)} is null");
+            var hostGame = Program.CurrentHostedGame ?? throw new InvalidOperationException($"{nameof(Program)}.{nameof(Program.CurrentHostedGame)} is null");
+            var allPlayers = Player.AllExceptGlobal.ToArray();
+            var discord = Program.Discord;
+
+            if (allPlayers.Length <= 0) throw new InvalidOperationException($"All player count is {allPlayers.Length}");
+
             // Register oneself to the server
             Version oversion = Const.OctgnVersion;
-            Program.Client.Rpc.Hello(this.Nickname, Player.LocalPlayer.UserId, Player.LocalPlayer.PublicKey,
+            client.Rpc.Hello(Nickname, localPlayer.UserId,
+                                     localPlayer.PublicKey,
                                      Const.ClientName, oversion, oversion,
-                                     Program.GameEngine.Definition.Id, Program.GameEngine.Definition.Version, this.Password
-                                     , Spectator);
+                                     def.Id, def.Version,
+                                     Password, Spectator);
             Program.IsGameRunning = true;
 
             if (IsReplay) {
-                ReplayEngine.Start();
+                var replayEngine = ReplayEngine ?? throw new InvalidOperationException($"{nameof(GameEngine)}.{nameof(GameEngine.ReplayEngine)} is null");
+                replayEngine.Start();
             }
 
-            Program.Discord.UpdateStatusInGame(Program.CurrentHostedGame, Program.IsHost, IsReplay, Spectator, true, Player.AllExceptGlobal.Count());
+            discord?.UpdateStatusInGame(hostGame, Program.IsHost, IsReplay, Spectator, true, allPlayers.Length);
         }
 
         public void Resume()

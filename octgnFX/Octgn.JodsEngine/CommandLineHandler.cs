@@ -7,6 +7,7 @@
     using log4net;
     using Octgn.DataNew;
     using Octgn.Launchers;
+    using Octgn.Library.Exceptions;
     using Octgn.Online.Hosting;
 
     public class CommandLineHandler
@@ -101,6 +102,8 @@
                 } else if (joinGame) {
                     var hostedGame = HostedGame.Deserialize(hostedGameString);
 
+                    Validate(hostedGame);
+
                     return new JoinGameLauncher(
                         hostedGame,
                         username,
@@ -109,6 +112,8 @@
                     );
                 } else if (hostGame) {
                     var hostedGame = HostedGame.Deserialize(hostedGameString);
+
+                    Validate(hostedGame);
 
                     return new JoinGameLauncher(
                         hostedGame,
@@ -139,12 +144,27 @@
                     return new DeckEditorLauncher(deckPath);
                 }
             }
+            catch (UserMessageException) {
+                throw;
+            }
             catch (Exception e)
             {
                 Log.Error("Error handling arguments", e);
                 if (args != null) Log.Error(string.Join(Environment.NewLine, args));
             }
             return null;
+        }
+
+        private static void Validate(HostedGame hostedGame) {
+            var minCreatedDate = DateTimeOffset.UtcNow.AddHours(-6);
+            var maxCreatedDate = DateTimeOffset.UtcNow.AddMinutes(1);
+            if (hostedGame.DateCreated.UtcDateTime <= minCreatedDate)
+                throw new UserMessageException($"Invalid game CreatedDate is too ancient {hostedGame.DateCreated}");
+            if (hostedGame.DateCreated.UtcDateTime >= maxCreatedDate)
+                throw new UserMessageException($"Invalid game CreatedDate is in the future {hostedGame.DateCreated}");
+
+            if (hostedGame.Id == Guid.Empty)
+                throw new UserMessageException($"Game Id Empty");
         }
 
         internal ILauncher HandleProtocol(Uri url)
