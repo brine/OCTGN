@@ -779,7 +779,7 @@ namespace Octgn.DataNew
             #region table
             var table = new table();
             SerializeGroup(game.Table, table);
-            table.background = game.Table.Background == null ? null : (game.Table.Background ?? "").Replace(rootPath, "");
+            table.background = game.Table.Background?.Replace(parsedRootPath, "").Replace(rootPath, "");
             table.height = game.Table.Height.ToString();
             table.width = game.Table.Width.ToString();
             switch (game.Table.BackgroundStyle)
