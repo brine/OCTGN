@@ -406,6 +406,7 @@
     <Compile Include="Utils\SSLValidationHelper.cs" />
     <Compile Include="Utils\TextBlockExtension.cs" />
     <Compile Include="Utils\UacHelper.cs" />
+    <Compile Include="ViewModels\GameImagesViewModel.cs" />
     <Compile Include="ViewModels\DataGameViewModel.cs" />
     <Compile Include="ViewModels\GameFeedViewModel.cs" />
     <Compile Include="Tabs\Play\HostedGameViewModel.cs" />
@@ -463,6 +464,9 @@
     </Compile>
     <Compile Include="Windows\Diagnostics.xaml.cs">
       <DependentUpon>Diagnostics.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ImageManager.xaml.cs">
+      <DependentUpon>ImageManager.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\Options.xaml.cs">
       <DependentUpon>Options.xaml</DependentUpon>
@@ -809,6 +813,10 @@
     <Page Include="Windows\Diagnostics.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ImageManager.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\Options.xaml">
       <SubType>Designer</SubType>
