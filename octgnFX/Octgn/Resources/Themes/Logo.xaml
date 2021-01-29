@@ -1,0 +1,158 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ControlTemplate x:Key="LogoTemplate" TargetType="ContentControl">
+        <ControlTemplate.Resources>
+            <Storyboard x:Key="LogoTimeline">
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" RepeatBehavior="Forever" Storyboard.TargetName="whiteRing" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
+                    <SplineDoubleKeyFrame KeySpline="0.5,0,0.5,0.5" KeyTime="00:00:00.5000000" Value="0"/>
+                    <SplineDoubleKeyFrame KeyTime="00:00:01" Value="1" KeySpline="0.5,0.5,0.5,1"/>
+                    <SplineDoubleKeyFrame KeyTime="00:00:01.5000000" Value="0" KeySpline="0.5,0,0.5,0.5"/>
+                    <SplineDoubleKeyFrame KeyTime="00:00:02" Value="1" KeySpline="0.5,0.5,0.5,1"/>
+                    <SplineDoubleKeyFrame KeyTime="00:00:02.5000000" Value="0" KeySpline="0.5,0,0.5,0.5"/>
+                    <SplineDoubleKeyFrame KeySpline="0.5,0.5,0.5,1" KeyTime="00:00:03" Value="1"/>
+                    <SplineDoubleKeyFrame KeyTime="00:00:06" Value="1" KeySpline="0.5,0,0.5,0.5"/>
+                </DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" RepeatBehavior="Forever" Storyboard.TargetName="logoRays" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
+                    <SplineDoubleKeyFrame KeySpline="0.5,0,0.5,0.5" KeyTime="00:00:00.5000000" Value="0"/>
+                    <SplineDoubleKeyFrame KeySpline="0.5,0.5,0.5,1" KeyTime="00:00:01" Value="1"/>
+                    <SplineDoubleKeyFrame KeyTime="00:00:01.5000000" Value="0" KeySpline="0.5,0,0.5,0.5"/>
+                    <SplineDoubleKeyFrame KeySpline="0.5,0.5,0.5,1" KeyTime="00:00:02" Value="1"/>
+                    <SplineDoubleKeyFrame KeyTime="00:00:02.5000000" Value="0" KeySpline="0.5,0,0.5,0.5"/>
+                    <SplineDoubleKeyFrame KeySpline="0.5,0.5,0.5,1" KeyTime="00:00:03" Value="1"/>
+                    <SplineDoubleKeyFrame KeySpline="0.5,0,0.5,1" KeyTime="00:00:06" Value="1"/>
+                </DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" RepeatBehavior="Forever" Storyboard.TargetName="redRing" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)">
+                    <SplineDoubleKeyFrame KeyTime="00:00:00.7500000" Value="0" KeySpline="0.5,0,0.5,0.5"/>
+                    <SplineDoubleKeyFrame KeyTime="00:00:01.5000000" Value="1" KeySpline="0.5,0.5,0.5,1"/>
+                    <SplineDoubleKeyFrame KeyTime="00:00:02.2500000" Value="0" KeySpline="0.5,0,0.5,0.5"/>
+                    <SplineDoubleKeyFrame KeyTime="00:00:03" Value="1" KeySpline="0.5,0.5,0.5,1"/>
+                    <SplineDoubleKeyFrame KeyTime="00:00:06" Value="1" KeySpline="0.5,0,0.5,1"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </ControlTemplate.Resources>
+        <ControlTemplate.Triggers>
+
+            <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                <EventTrigger.Actions>
+                    <BeginStoryboard Storyboard="{StaticResource LogoTimeline}"/>
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </ControlTemplate.Triggers>
+
+        <Viewbox Stretch="Uniform" RenderTransformOrigin="0.5,0.5">
+            <Viewbox.RenderTransform>
+                <TransformGroup>
+                    <SkewTransform AngleX="-17.791" AngleY="0"/>
+                </TransformGroup>
+            </Viewbox.RenderTransform>
+            <Canvas Width="48.637" Height="48.637">
+                <Path x:Name="whiteRing"
+                      Stretch="Fill" 
+                      StrokeThickness="0.640004"
+                      StrokeLineJoin="Round"
+                      Stroke="#FF000000"
+                      Fill="#4DFFFFFF" 
+                      Data="M43.4584,42.6305 L26.4889,49.6595 9.51936,42.6305 2.49036,25.6609 9.51936,8.69142 26.4889,1.66241 43.4584,8.69142 50.4874,25.6609 43.4584,42.6305 z M19.29498,32.717361 C19.29498,32.717361 26.413233,35.678091 26.413233,35.678091 26.413233,35.678091 33.802542,32.717361 33.802542,32.717361 33.802542,32.717361 36.804173,25.463573 36.804173,25.463573 36.804173,25.463573 33.882247,18.314523 33.882247,18.314523 33.882247,18.314523 26.633895,15.2984 26.633895,15.2984 26.633895,15.2984 19.309766,18.308476 19.309766,18.308476 19.309766,18.308476 16.32397,25.61161 16.32397,25.61161 16.32397,25.61161 19.29498,32.717361 19.29498,32.717361 z" 
+                      RenderTransformOrigin="0.5,0.5"
+                      HorizontalAlignment="Stretch" 
+                      Margin="0,0,0,0"
+                      VerticalAlignment="Stretch" 
+                      Width="48.637"
+                      Height="48.637">
+                    <Path.RenderTransform>
+                        <ScaleTransform />
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="redRing"
+                      Stretch="Fill"
+                      StrokeThickness="0.640004"
+                      StrokeLineJoin="Round"
+                      Stroke="#FF000000" 
+                      Fill="#FFFF0000" 
+                      Data="F1 M 33.6633,32.5853L 36.6005,25.4943L 33.6633,18.4032L 26.5722,15.466L 19.4812,18.4032L 16.544,25.4943L 19.4812,32.5853L 26.5722,35.5225L 33.6633,32.5853 Z M 43.2023,18.7694L 43.2023,32.7361L 33.3264,42.612L 19.3597,42.612L 9.48378,32.7361L 9.48378,18.7694L 19.3597,8.89349L 33.3264,8.89349L 43.2023,18.7694 Z " 
+                      RenderTransformOrigin="0.5,0.5"
+                      HorizontalAlignment="Stretch"
+                      Margin="0,0,0,0" 
+                      VerticalAlignment="Stretch"
+                      Width="34.358"
+                      Height="34.358" 
+                      Canvas.Left="6.994" 
+                      Canvas.Top="7.231">
+                    <Path.RenderTransform>
+                        <ScaleTransform />
+                    </Path.RenderTransform>
+                </Path>
+                <Canvas RenderTransformOrigin="0.5,0.5"
+                        x:Name="logoRays"
+                        Width="48.367"
+                        Height="48.317"
+                        Canvas.Left="0.16"
+                        Canvas.Top="0.16">
+                    <Canvas.RenderTransform>
+                        <ScaleTransform />
+                    </Canvas.RenderTransform>
+                    <Path Stretch="Fill" 
+                          StrokeThickness="0.32"
+                          StrokeLineJoin="Round"
+                          Stroke="#4D000000" 
+                          Data="F1 M 26.4889,1.66241L 9.51936,42.6305L 43.4584,42.6305L 26.4889,1.66241 Z " 
+                          HorizontalAlignment="Stretch"
+                          Margin="0,0,0,0"
+                          VerticalAlignment="Stretch" 
+                          Width="34.259" 
+                          Height="41.288" 
+                          Canvas.Left="7.029"/>
+                    <Path Stretch="Fill"
+                          StrokeThickness="0.32"
+                          StrokeLineJoin="Round" 
+                          Stroke="#4D000000" 
+                          Data="F1 M 9.51936,8.69142L 43.4584,8.69142L 26.4889,49.6595L 9.51936,8.69142 Z " 
+                          HorizontalAlignment="Stretch"
+                          Margin="0,0,0,0"
+                          VerticalAlignment="Stretch"
+                          Width="34.259" 
+                          Height="41.288"
+                          Canvas.Left="7.029"
+                          Canvas.Top="7.029"/>
+                    <Path Stretch="Fill" 
+                          StrokeThickness="0.32"
+                          StrokeLineJoin="Round"
+                          Stroke="#4D000000" 
+                          Data="F1 M 2.49036,25.6609L 26.4889,1.66241L 50.4874,25.6609L 26.4889,49.6595L 2.49036,25.6609 Z " 
+                          HorizontalAlignment="Stretch"
+                          Margin="0,0,0,0"
+                          VerticalAlignment="Stretch"
+                          Width="48.317"
+                          Height="48.317"/>
+                    <Path Stretch="Fill" 
+                          StrokeThickness="0.32" 
+                          StrokeLineJoin="Round"
+                          Stroke="#4D000000" 
+                          Data="F1 M 9.51936,42.6305L 50.5375,25.2319L 9.51936,8.69142L 43.4584,8.69142L 9.51936,8.69142L 9.51936,42.6305" 
+                          HorizontalAlignment="Stretch"
+                          Margin="0,0,0,0" 
+                          VerticalAlignment="Stretch"
+                          Width="41.338"
+                          Height="34.259"
+                          Canvas.Left="7.029"
+                          Canvas.Top="7.029"/>
+                    <Path Stretch="Fill" 
+                          StrokeThickness="0.32" 
+                          StrokeLineJoin="Round" 
+                          Stroke="#4D000000" 
+                          Data="F1 M 43.4584,8.69142L 2.49036,25.6609L 43.4584,42.6305L 43.4584,8.69142" 
+                          HorizontalAlignment="Stretch" 
+                          Margin="0,0,0,0" 
+                          VerticalAlignment="Stretch" 
+                          Width="41.288" 
+                          Height="34.259" 
+                          Canvas.Top="7.029"/>
+                </Canvas>
+            </Canvas>
+        </Viewbox>
+    </ControlTemplate>
+
+</ResourceDictionary>
