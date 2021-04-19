@@ -33,13 +33,48 @@ namespace Octgn.ViewModels
         private object _gameLock = new object();
         private object _cardsLock = new object();
 
-        public ImageManagerGameModel selectedGame;
-        public ImageManagerSetModel selectedSet;
 
         public ObservableCollection<ImageManagerCardModel> Cards { get; private set; }
-
         public ObservableCollection<ImageManagerImageModel> Images { get; private set; }
 
+        private ImageManagerGameModel _selectedGame;
+        public ImageManagerGameModel SelectedGame
+        {
+            get { return _selectedGame; }
+            set {
+                if (Equals(value, _selectedGame)) return;
+                _selectedGame = value;
+                if (_selectedGame is ImageManagerGameModel)
+                   _selectedGame.LoadSets();
+                UpdateCards();
+                RaisePropertyChanged(nameof(SelectedGame));
+            }
+        }
+
+        private ImageManagerSetModel _selectedSet;
+        public ImageManagerSetModel SelectedSet
+        {
+            get { return _selectedSet; }
+            set {
+                if (Equals(value, _selectedSet)) return;
+                _selectedSet = value;
+                UpdateCards();
+                RaisePropertyChanged(nameof(SelectedSet));
+                RaisePropertyChanged(nameof(IsSetSelected));
+            }
+        }
+        public bool IsSetSelected => SelectedSet != null;
+
+        private bool _isBusy; 
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set {
+                if (Equals(value, _isBusy)) return;
+                _isBusy = value;
+                RaisePropertyChanged(nameof(IsBusy));
+            }
+        }
         public ImageManagerViewModel()
         {
             Games = new ObservableCollection<ImageManagerGameModel>();
@@ -48,98 +83,51 @@ namespace Octgn.ViewModels
             BindingOperations.EnableCollectionSynchronization(Games, _gameLock);
             BindingOperations.EnableCollectionSynchronization(Cards, _cardsLock);
             BindingOperations.EnableCollectionSynchronization(Images, _cardsLock);
-
             LoadGames();
         }
-
         private async void LoadGames()
         {
             var imageDirectory = new DirectoryInfo(Config.Instance.ImageDirectoryFull);
-            await Task.Run(() =>
-            {
-                var gamesList = imageDirectory.GetDirectories();
-                lock (_gameLock)
-                {
+            await Task.Run(() => {
+                var gameFoldersList = imageDirectory.GetDirectories();
+                lock (_gameLock) {
                     // register all files in image database
-                    foreach (var gameDir in gamesList)
-                    {
+                    foreach (var gameDir in gameFoldersList) {
                         Log.Info("Loading Game at directory " + gameDir.FullName);
                         var game = new ImageManagerGameModel(gameDir);
                         Games.Add(game);
                     }
                     // load games
-                    foreach (var game in Games)
-                    {
+                    foreach (var game in Games) {
                         game.LoadGame();
                     }
                 }
             });
-
         }
-        public ImageManagerGameModel SelectedGame
-        {
-            get { return this.selectedGame; }
-            set
-            {
-                if (Equals(value, this.selectedGame))
-                {
-                    return;
-                }
-                this.selectedGame = value;
-                UpdateCards();
-                RaisePropertyChanged(nameof(SelectedGame));
-            }
-        }
-        public ImageManagerSetModel SelectedSet
-        {
-            get { return this.selectedSet; }
-            set
-            {
-                if (Equals(value, this.selectedSet))
-                {
-                    return;
-                }
-                this.selectedSet = value;
-                UpdateCards();
-                RaisePropertyChanged(nameof(SelectedSet));
-                RaisePropertyChanged(nameof(IsSetSelected));
-            }
-        }
-        public bool IsSetSelected => SelectedSet != null;
-
 
         private async void UpdateCards()
         {
             IsBusy = true;
-            await Task.Run(() =>
-            {
-                lock (_cardsLock)
-                {
+            await Task.Run(() => {
+                lock (_cardsLock) {
                     Cards.Clear();
                     Images.Clear();
-                    if (SelectedSet != null)
-                    {
-                        foreach (var file in SelectedSet.Files)
-                        {
+                    if (SelectedSet != null) {
+                        foreach (var file in SelectedSet.Files) {
                             var image = new ImageManagerImageModel(file, SelectedSet);
                             if (image.IsValid)
                                 Images.Add(image);
                         }
-                        if (SelectedSet.Status == ImageManagerItemStatus.Installed)
-                        {
+                        if (SelectedSet.Status == ImageManagerItemStatus.Installed) {
                             Log.Info("Loading Cards for Set " + SelectedSet.Set?.Name ?? SelectedSet.Id.ToString());
-                            foreach (var card in SelectedSet.Set.Cards)
-                            {
-                                foreach (var alt in card.PropertySets.Values)
-                                {
+                            foreach (var card in SelectedSet.Set.Cards) {
+                                foreach (var alt in card.PropertySets.Values) {
                                     var cardVM = new ImageManagerCardModel(card, alt, SelectedSet);
                                     var fileName = card.ImageUri;
                                     if (!String.IsNullOrWhiteSpace(alt.Type))
                                         fileName = fileName + "." + alt.Type;
-
                                     var cardImage = Images.FirstOrDefault(x => x.Name == fileName);
-                                    if (cardImage != null)
-                                    {
+                                    if (cardImage != null) {
                                         cardVM.Image = cardImage;
                                         Images.Remove(cardImage);
                                     }
@@ -156,21 +144,6 @@ namespace Octgn.ViewModels
                 IsBusy = false;
             });
         }
-
-        private bool _isBusy;
-        public bool IsBusy
-        {
-            get
-            {
-                return _isBusy;
-            }
-            set
-            {
-                _isBusy = value;
-                RaisePropertyChanged(nameof(IsBusy));
-            }
-        }
-
     }
 
     public class ImageManagerGameModel : ViewModelBase
@@ -193,38 +166,20 @@ namespace Octgn.ViewModels
         private ImageManagerItemStatus _status;
         public ImageManagerItemStatus Status
         {
-            get
-            {
-                return _status;
-            }
-            set
-            {
-                if (_status == value) return;
+            get { return _status; }
+            set {
+                if (Equals(value, _status)) return;
                 _status = value;
                 RaisePropertyChanged(nameof(Status));
             }
         }
 
-        public bool _isExpanded;
+        public bool _isExpanded = true;
         public bool IsExpanded
         {
-            get
-            {
-                return _isExpanded;
-            }
-            set
-            {
-                if (_isExpanded == value) return;
-                if (value == true)
-                {
-                    Task.Run(() =>
-                    {
-                        foreach (var set in Sets)
-                        {
-                            set.LoadSet();
-                        }
-                    });
-                }
+            get { return _isExpanded; }
+            set {
+                if (Equals(value, _isExpanded)) return;
                 _isExpanded = value;
                 RaisePropertyChanged(nameof(IsExpanded));
             }
@@ -234,33 +189,58 @@ namespace Octgn.ViewModels
 
         public ImageManagerGameModel()
         {
-
-        }
-
-        public ImageManagerGameModel(DirectoryInfo directory)
-        {
-            ShowSetsToggleButton = new RelayCommand(ShowSetsToggle);
+            ShowSetsToggleButton = new RelayCommand(() => IsExpanded = !IsExpanded);
             BrowseFolderButton = new RelayCommand(BrowseFolder);
             DeleteImagesButton = new RelayCommand(DeleteImages);
+        }
+
+        public ImageManagerGameModel(DirectoryInfo directory) : this()
+        {
             Directory = directory;
             Log.Info("Registering Game at directory " + directory.FullName);
-            if (Guid.TryParse(directory.Name, out var id))
-            {
+            if (Guid.TryParse(directory.Name, out var id)) {
                 Id = id;
                 Log.Info("-> Directory is a valid game.");
                 Sets = new ObservableCollection<ImageManagerSetModel>();
                 var setsDirectoryList = new DirectoryInfo(Path.Combine(Directory.FullName, "Sets")).GetDirectories();
                 Log.Info("-> " + setsDirectoryList.Count() + " Set directories found.");
-                foreach (var s in setsDirectoryList)
-                {
+                foreach (var s in setsDirectoryList) {
                     var set = new ImageManagerSetModel(s, this);
                     Sets.Add(set);
                 }
             }
-            else
-            {
+            else {
                 Log.Info("-> Directory was not a valid game.");
                 Status = ImageManagerItemStatus.Invalid;
+            }
+        }
+        public void LoadGame()
+        {
+            if (Status == ImageManagerItemStatus.Unloaded) {
+                Log.Info("Locating Game with Id " + Id.ToString());
+                Game = GameManager.Get().GetById(Id);
+                if (Game == null) {
+                    Log.Info("-> Game is not installed.");
+                    Status = ImageManagerItemStatus.Unknown;
+                }
+                else {
+                    Log.Info("Game identified as:  " + Game.Name);
+                    Status = ImageManagerItemStatus.Installed;
+                }
+            }
+            RaisePropertyChanged(nameof(GameIcon));
+            RaisePropertyChanged(nameof(Name));
+        }
+
+        async public void LoadSets()
+        {
+            if (Status != ImageManagerItemStatus.Invalid)
+            {
+                await Task.Run(() => {
+                    foreach (var set in Sets) {
+                        set.LoadSet();
+                    }
+                });
             }
         }
 
@@ -268,6 +248,7 @@ namespace Octgn.ViewModels
         {
 
         }
+
         public void ShowSetsToggle()
         {
             IsExpanded = !IsExpanded;
@@ -277,28 +258,6 @@ namespace Octgn.ViewModels
         {
             if (Directory != null && Directory.Exists)
                 Process.Start("explorer.exe", Directory.FullName);
-        }
-
-
-        public void LoadGame()
-        {
-            if (Status == ImageManagerItemStatus.Unloaded)
-            {
-                Log.Info("Locating Game with Id " + Id.ToString());
-                Game = GameManager.Get().GetById(Id);
-                if (Game == null)
-                {
-                    Log.Info("-> Game is not installed.");
-                    Status = ImageManagerItemStatus.Unknown;
-                }
-                else
-                {
-                    Log.Info("Game identified as:  " + Game.Name);
-                    Status = ImageManagerItemStatus.Installed;
-                }
-            }
-            RaisePropertyChanged(nameof(GameIcon));
-            RaisePropertyChanged(nameof(Name));
         }
     }
 
@@ -312,16 +271,14 @@ namespace Octgn.ViewModels
         public string Name => Set?.Name;
         public Set Set { get; private set; }
         public DirectoryInfo Directory { get; set; }
+        public int TotalFileCount => Files.Count();
+        public int TotalCardCount => Set == null ? 0 : Set.Cards.SelectMany(x => x.Alternate).Count();
 
         private ImageManagerItemStatus _status;
         public ImageManagerItemStatus Status
         {
-            get
-            {
-                return _status;
-            }
-            set
-            {
+            get { return _status; }
+            set {
                 if (_status == value) return;
                 _status = value;
                 RaisePropertyChanged(nameof(Status));
@@ -334,15 +291,13 @@ namespace Octgn.ViewModels
             Parent = parent;
             Directory = directory;
             Log.Info("Registering Set at directory " + directory.FullName);
-            if (Guid.TryParse(directory.Name, out var id))
-            {
+            if (Guid.TryParse(directory.Name, out var id)) {
                 Id = id;
                 Log.Info("-> Directory is a valid set.");
                 Files = new DirectoryInfo(Path.Combine(Directory.FullName, "Cards")).GetFiles();
                 Log.Info("-> " + Files.Count() + " files found.");
             }
-            else
-            {
+            else {
                 Log.Info("-> Directory was not a valid set.");
                 Status = ImageManagerItemStatus.Invalid;
             }
@@ -350,25 +305,27 @@ namespace Octgn.ViewModels
 
         public void LoadSet()
         {
-            if (Status == ImageManagerItemStatus.Unloaded)
-            {
-                if (Parent.Status == ImageManagerItemStatus.Installed)
-                {
+            if (Status == ImageManagerItemStatus.Unloaded) {
+                if (Parent.Status == ImageManagerItemStatus.Installed) {
                     Log.Info("Locating Set with Id " + Id.ToString());
                     Set = SetManager.Get().GetById(Id);
-                    if (Set == null)
-                    {
+                    if (Set == null) {
                         Log.Info("-> Set is not installed.");
                         Status = ImageManagerItemStatus.Unknown;
                     }
-                    else
-                    {
+                    else {
                         Log.Info("Set identified as:  " + Set.Name);
                         Status = ImageManagerItemStatus.Installed;
                     }
                 }
+                else if (Parent.Status == ImageManagerItemStatus.Unknown) {
+                    Log.Info("Set is from unknown game.");
+                    Status = ImageManagerItemStatus.Unknown;
+                }
             }
             RaisePropertyChanged(nameof(Name));
+            RaisePropertyChanged(nameof(TotalFileCount));
+            RaisePropertyChanged(nameof(TotalCardCount));
         }
     }
 
@@ -400,10 +357,16 @@ namespace Octgn.ViewModels
         public bool IsValid => ValidImageTypes.Contains(File?.Extension.ToLowerInvariant());
         public FileInfo File { get; private set; }
 
-        public ImageManagerImageModel(FileInfo file, ImageManagerSetModel parent)
-        { 
-            File = file;
-            Parent = parent;
+        private ImageManagerItemStatus _status;
+        public ImageManagerItemStatus Status
+        {
+            get { return _status; }
+            set
+            {
+                if (_status == value) return;
+                _status = value;
+                RaisePropertyChanged(nameof(Status));
+            }
         }
 
         private BitmapImage _image;
@@ -413,7 +376,7 @@ namespace Octgn.ViewModels
             {
                 if (IsValid)
                 {
-                    /*    if (_image == null)
+                        if (_image == null)
                         {
                             var time = new Stopwatch();
                             time.Start();
@@ -426,15 +389,28 @@ namespace Octgn.ViewModels
                             _image = bim;
                             Log.Info("Loading Image " + File?.Name + " (" + time.ElapsedMilliseconds + ")");
                         }
-                        return _image;*/
-                    return BitmapFrame.Create(new Uri(File?.FullName), BitmapCreateOptions.DelayCreation, BitmapCacheOption.OnLoad);
+                    Status = ImageManagerItemStatus.Installed;
+                    return _image;
+ //                   return BitmapFrame.Create(new Uri(File?.FullName), BitmapCreateOptions.DelayCreation, BitmapCacheOption.OnLoad);
                 }
                 else
                 {
+                    Status = ImageManagerItemStatus.Invalid;
                     return null;
                 }
             }
         }
+
+        public ImageManagerImageModel(FileInfo file, ImageManagerSetModel parent)
+        { 
+            File = file;
+            Parent = parent;
+            if (!IsValid)
+            {
+                Status = ImageManagerItemStatus.Invalid;
+            }
+        }
+
     }
 
     public enum ImageManagerItemStatus
