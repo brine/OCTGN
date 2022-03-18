@@ -1012,6 +1012,7 @@ namespace Octgn.Scripting.Versions
             });
         }
 
+        //deprecated version used by askChoice()
         public int? AskChoice(string question, List<string> choices, List<string> colors, List<string> buttons)
         {
             return QueueAction<int?>(() =>
@@ -1019,6 +1020,19 @@ namespace Octgn.Scripting.Versions
                 var dlg = new ChoiceDlg("Choose One", question, choices, colors, buttons);
                 int? result = dlg.GetChoice();
                 return dlg.DialogResult.GetValueOrDefault() ? result : 0;
+            });
+        }
+        public Tuple<int[], int?> AskChoice(string title, string text, bool multi, List<string> labels, List<string> backgrounds, List<string> foregrounds, List<int> sizes, List<int> heights, List<bool> enableds, List<bool> ischoices)
+        {
+            return QueueAction<Tuple<int[], int?>>(() =>
+            {
+                var dlg = new ChoiceDlg(title, text, multi, labels, backgrounds, foregrounds, sizes, heights, enableds, ischoices);
+                var result = dlg.ShowDialog();
+                if (result == false)
+                {
+                    return null;
+                }
+                return Tuple.Create(dlg.SelectedChoices, dlg.SelectedControl);
             });
         }
 

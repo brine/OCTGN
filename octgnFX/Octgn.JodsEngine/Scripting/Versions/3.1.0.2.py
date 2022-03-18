@@ -101,16 +101,149 @@ def saveFileDlg(title, defaultPath, fileFilter):
 def openFileDlg(title, defaultPath, fileFilter):
 	return _api.OpenFileDlg(title, defaultPath, fileFilter)
 
-def askChoice(question, choices = [], colors = [], customButtons = []):
-	choiceList = List[String](choices)
+def askChoice2(question, choices = [], colors = [], customButtons = []):
+	newDlg = choiceDlg()
+	newDlg.text = question
+	count = 0
 	if len(colors) != len(choices):
 		colors = []
-		for count in choices:
-			colors.append('None')
-	colorList = List[String](colors)
-	buttonList = List[String](customButtons)
-	apiResult = _api.AskChoice(question, choiceList, colorList, buttonList)
+		for x in choices:
+			colors.append(None)
+	for x in choices:
+		button = choiceButton()
+		button.label = x
+		button.background = colors[count]
+		newDlg.choices.append(button)
+		count += 1
+	for x in customButtons:
+		button = choiceButton()
+		button.label = x
+		newDlg.buttons.append(button)
+	apiResult = newDlg.show()
 	return apiResult
+
+def askChoice(question, choices = [], colors = [], customButtons = []):
+  choiceList = List[String](choices)
+  if len(colors) != len(choices):
+    colors = []
+    for count in choices:
+      colors.append('None')
+  colorList = List[String](colors)
+  buttonList = List[String](customButtons)
+  apiResult = _api.AskChoice(question, choiceList, colorList, buttonList)
+  return apiResult
+
+class choiceDlg(object):
+	title = "Choose One"
+	text = ""
+	result = None
+
+	def __init__(self):
+		self.choices = []
+		self.controls = []
+		self._multi = False
+
+	def show(self):
+		labels = List[String]()
+		backgrounds = List[String]()
+		foregrounds = List[String]()
+		sizes = List[int]()
+		heights = List[int]()
+		enableds = List[bool]()
+		ischoices = List[bool]()
+		for x in self.choices:
+			labels.Add(x.text)
+			backgrounds.Add(x.background)
+			foregrounds.Add(x.foreground)
+			sizes.Add(x.size)
+			heights.Add(x.height)
+			enableds.Add(x.enabled)
+			ischoices.Add(True)
+		for x in self.controls:
+			labels.Add(x.text)
+			backgrounds.Add(x.background)
+			foregrounds.Add(x.foreground)
+			sizes.Add(x.size)
+			heights.Add(x.height)
+			enableds.Add(x.enabled)
+			ischoices.Add(False)
+		ret = _api.AskChoice(self.title, self.text, self.multi, labels, backgrounds, foregrounds, sizes, heights, enableds, ischoices)
+		if ret == None:
+			self.result = None
+			return None
+		else:
+			self.result = [x for x in ret[0]]
+			return ret[1]
+
+	
+	@property
+	def multi(self): return self._multi
+	@multi.setter
+	def multi(self, value):
+		if value == True or value == False:
+			self._multi = value
+		else:
+			raise ValueError("Value must be of type(bool)")
+
+
+class choiceButton(object):
+	text = ""
+
+	def __init__(self):
+		self._background = None
+		self._foreground = None
+		self._size = 0
+		self._height = 0
+		self._enabled = True
+
+	@property
+	def background(self): return self._background
+	@background.setter
+	def background(self, value):
+		self._background = self.regexCheckColor(value)
+		
+	@property
+	def foreground(self): return self._foreground
+	@foreground.setter
+	def foreground(self, value):
+		self._foreground = self.regexCheckColor(value)
+
+	@property
+	def size(self): return self._size
+	@size.setter
+	def size(self, value):
+		self._size = self.checkPosInt(value)
+
+	@property
+	def height(self): return self._height
+	@height.setter
+	def height(self, value):
+		self._height = self.checkPosInt(value)
+
+	@property
+	def enabled(self): return self._enabled
+	@enabled.setter
+	def enabled(self, value):
+		if value == True or value == False:
+			self.enabled = value
+		else:
+			raise ValueError("Value must be of type(bool)")
+				
+	def regexCheckColor(self, string):
+		if string == None: return string
+		match = re.search(r'^#(?:[0-9a-fA-F]{3}){1,2}$', string)
+		if not match:
+			raise ValueError("'{}' is not a valid HEX color format".format(string))
+		return string
+
+	def checkPosInt(self, value):
+		if value == None: return value
+		if type(value) is not int:
+			raise TypeError("Value must be of type(int)")
+		if value < 0:
+			raise ValueError("Value cannot be less than 0")
+		return value
+
 
 def askMarker():
 	apiResult = _api.AskMarker()

@@ -12,11 +12,10 @@
         </Border>
         <Border Style="{StaticResource DarkPanel}" Margin="8">
             <ScrollViewer MaxHeight="400" MaxWidth="330" VerticalScrollBarVisibility="Auto">
-                <StackPanel Orientation="Vertical" x:Name="buttonField">
-                </StackPanel>
+                <StackPanel Orientation="Vertical" x:Name="choicesField" />
             </ScrollViewer>
         </Border>
-        <StackPanel Orientation="Horizontal" x:Name="customField">
+        <StackPanel Orientation="Horizontal" x:Name="controlsField">
         </StackPanel>
     </StackPanel>
 </controls:DecorableWindow>
