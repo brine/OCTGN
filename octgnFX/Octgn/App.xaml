@@ -14,6 +14,8 @@
         </ResourceDictionary>
         <ResourceDictionary Source="/Resources/Themes/Target.xaml">
         </ResourceDictionary>
+        <ResourceDictionary Source="/Resources/Themes/Logo.xaml">
+        </ResourceDictionary>
         <ResourceDictionary Source="/Resources/Themes/BlueGlass/Window.xaml">
         </ResourceDictionary>
         <ResourceDictionary Source="/Resources/Themes/BlueGlass/Panel.xaml">

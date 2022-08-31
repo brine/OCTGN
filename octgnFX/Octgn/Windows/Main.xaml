@@ -36,6 +36,7 @@
             <MenuItem x:Name="menuOptions" Header="_Options" Click="MenuOptionsClick">
             </MenuItem>
             <MenuItem Header="_Deck Editor" Click="MenuDeckEditorClick"></MenuItem>
+            <MenuItem Header="_Image Manager" Click="ImageManagerClick"></MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem x:Name="menuHelp" Header="Get _Help Online" HorizontalAlignment="Left" MinWidth="137" Click="MenuHelpClick"/>
                 <MenuItem x:Name="menuDiag" Header="_Diagnostics" HorizontalAlignment="Left" MinWidth="137" Click="MenuDiagClick"/>

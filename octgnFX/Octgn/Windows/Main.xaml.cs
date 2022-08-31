@@ -232,6 +232,12 @@ namespace Octgn.Windows
             Program.JodsEngine.LaunchDeckEditor();
         }
 
+        private void ImageManagerClick(object sender, RoutedEventArgs e)
+        {
+            var dlg = new ImageManager();
+            dlg.Show();
+            dlg.Closed += (a, b) => dlg.Dispose();
+        }
         private void MenuOptionsClick(object sender, RoutedEventArgs e)
         {
             var options = new Options();
