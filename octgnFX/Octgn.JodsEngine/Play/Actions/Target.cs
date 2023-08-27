@@ -41,6 +41,7 @@ namespace Octgn.Play.Actions
             Program.GameEngine.EventProxy.OnTargetCard_3_1_0_0(Who, FromCard, true);
             Program.GameEngine.EventProxy.OnTargetCard_3_1_0_1(Who, FromCard, true);
             Program.GameEngine.EventProxy.OnCardTargeted_3_1_0_2(Who, FromCard, true, IsScriptChange);
+            Program.GameEngine.EventProxy.OnCardTargeted_3_2_0_0(Who, FromCard, true, IsScriptChange);
         }
 
         private void ArrowTarget()
@@ -50,6 +51,7 @@ namespace Octgn.Play.Actions
             Program.GameEngine.EventProxy.OnTargetCardArrow_3_1_0_0(Who, FromCard, ToCard, true);
             Program.GameEngine.EventProxy.OnTargetCardArrow_3_1_0_1(Who, FromCard, ToCard, true);
             Program.GameEngine.EventProxy.OnCardArrowTargeted_3_1_0_2(Who, FromCard, ToCard, true, IsScriptChange);
+            Program.GameEngine.EventProxy.OnCardArrowTargeted_3_2_0_0(Who, FromCard, ToCard, true, IsScriptChange);
         }
 
         private void ClearTarget()
@@ -60,6 +62,7 @@ namespace Octgn.Play.Actions
                 Program.GameEngine.EventProxy.OnTargetCardArrow_3_1_0_0(Who, FromCard, ToCard, false);
                 Program.GameEngine.EventProxy.OnTargetCardArrow_3_1_0_1(Who, FromCard, ToCard, false);
                 Program.GameEngine.EventProxy.OnCardArrowTargeted_3_1_0_2(Who, FromCard, ToCard, false, IsScriptChange);
+                Program.GameEngine.EventProxy.OnCardArrowTargeted_3_2_0_0(Who, FromCard, ToCard, false, IsScriptChange);
             }
 
             if (FromCard.TargetedBy != null)
@@ -68,6 +71,7 @@ namespace Octgn.Play.Actions
                 Program.GameEngine.EventProxy.OnTargetCard_3_1_0_0(Who, FromCard, false);
                 Program.GameEngine.EventProxy.OnTargetCard_3_1_0_1(Who, FromCard, false);
                 Program.GameEngine.EventProxy.OnCardTargeted_3_1_0_2(Who, FromCard, false, IsScriptChange);
+                Program.GameEngine.EventProxy.OnCardTargeted_3_2_0_0(Who, FromCard, false, IsScriptChange);
             }
         }
     }

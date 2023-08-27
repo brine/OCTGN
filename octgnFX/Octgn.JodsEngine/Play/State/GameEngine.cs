@@ -738,6 +738,7 @@ namespace Octgn
             EventProxy.OnGameStart_3_1_0_0();
             EventProxy.OnGameStart_3_1_0_1();
             EventProxy.OnGameStarted_3_1_0_2();
+            EventProxy.OnGameStarted_3_2_0_0();
 
             if (isSoft)
             {

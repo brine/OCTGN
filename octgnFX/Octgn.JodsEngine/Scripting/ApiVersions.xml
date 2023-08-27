@@ -3,4 +3,5 @@
   <version version="3.1.0.0" releaseDate="2014-1-12" releaseMode="Live"/>
   <version version="3.1.0.1" releaseDate="2014-1-22" releaseMode="Live"/>
   <version version="3.1.0.2" releaseDate="2015-8-26" releaseMode="Live"/>
+  <version version="3.2.0.0" releaseDate="2021-5-15" releaseMode="Live"/>
 </versions>

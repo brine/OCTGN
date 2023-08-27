@@ -188,6 +188,7 @@ namespace Octgn.Networking
             Program.GameEngine.EventProxy.OnTurn_3_1_0_0(player, Program.GameEngine.TurnNumber);
             Program.GameEngine.EventProxy.OnTurn_3_1_0_1(player, Program.GameEngine.TurnNumber);
             Program.GameEngine.EventProxy.OnTurnPassed_3_1_0_2(lastPlayer, lastTurn, force);
+            Program.GameEngine.EventProxy.OnTurnPassed_3_2_0_0(lastPlayer, lastTurn, force);
         }
 
         public void StopTurn(Player player)
@@ -199,6 +200,7 @@ namespace Octgn.Networking
             Program.GameEngine.EventProxy.OnEndTurn_3_1_0_0(player);
             Program.GameEngine.EventProxy.OnEndTurn_3_1_0_1(player);
             Program.GameEngine.EventProxy.OnTurnPaused_3_1_0_2(player);
+            Program.GameEngine.EventProxy.OnTurnPaused_3_2_0_0(player);
         }
 
         public void SetPhase(byte phase, Player[] players, bool force)
@@ -214,9 +216,15 @@ namespace Octgn.Networking
             }
 
             if (currentPhase == null)
+            {
                 Program.GameEngine.EventProxy.OnPhasePassed_3_1_0_2(null, 0, force);
+                Program.GameEngine.EventProxy.OnPhasePassed_3_2_0_0(null, 0, force);
+            }
             else
+            {
                 Program.GameEngine.EventProxy.OnPhasePassed_3_1_0_2(currentPhase.Name, currentPhase.Id, force);
+                Program.GameEngine.EventProxy.OnPhasePassed_3_2_0_0(currentPhase.Name, currentPhase.Id, force);
+            }
         }
 
         public void SetActivePlayer(Player player)
@@ -226,6 +234,7 @@ namespace Octgn.Networking
             Program.GameEngine.ActivePlayer = player;
             Program.GameEngine.StopTurn = false;
             Program.GameEngine.EventProxy.OnTurnPassed_3_1_0_2(lastPlayer, Program.GameEngine.TurnNumber, false);
+            Program.GameEngine.EventProxy.OnTurnPassed_3_2_0_0(lastPlayer, Program.GameEngine.TurnNumber, false);
         }
 
         public void ClearActivePlayer()
@@ -235,6 +244,7 @@ namespace Octgn.Networking
             Program.GameEngine.ActivePlayer = null;
             Program.GameEngine.StopTurn = false;
             Program.GameEngine.EventProxy.OnTurnPassed_3_1_0_2(lastPlayer, Program.GameEngine.TurnNumber, false);
+            Program.GameEngine.EventProxy.OnTurnPassed_3_2_0_0(lastPlayer, Program.GameEngine.TurnNumber, false);
         }
 
         public void SetBoard(Player player, string name)
@@ -303,6 +313,7 @@ namespace Octgn.Networking
                     {
                         Program.GameEngine.EventProxy.OnPlayerConnect_3_1_0_1(player);
                         Program.GameEngine.EventProxy.OnPlayerConnected_3_1_0_2(player);
+                        Program.GameEngine.EventProxy.OnPlayerConnected_3_2_0_0(player);
                     }
                 }
                 else
@@ -319,6 +330,7 @@ namespace Octgn.Networking
                 {
                     Program.GameEngine.EventProxy.OnPlayerConnect_3_1_0_1(p);
                     Program.GameEngine.EventProxy.OnPlayerConnected_3_1_0_2(p);
+                    Program.GameEngine.EventProxy.OnPlayerConnected_3_2_0_0(p);
                 }
             }
         }
@@ -369,6 +381,7 @@ namespace Octgn.Networking
             Program.GameEngine.EventProxy.OnLoadDeck_3_1_0_0(who, @group.Distinct().ToArray());
             Program.GameEngine.EventProxy.OnLoadDeck_3_1_0_1(who, @group.Distinct().ToArray());
             Program.GameEngine.EventProxy.OnDeckLoaded_3_1_0_2(who, limited, @group.Distinct().ToArray());
+            Program.GameEngine.EventProxy.OnDeckLoaded_3_2_0_0(who, limited, @group.Distinct().ToArray());
         }
 
         /// <summary>Creates new Cards as well as the corresponding CardIdentities. The cards may be in different groups.</summary>
@@ -486,6 +499,7 @@ namespace Octgn.Networking
             if( !Program.InPreGame ) {
                 Program.GameEngine.EventProxy.OnPlayerLeaveGame_3_1_0_1( player );
                 Program.GameEngine.EventProxy.OnPlayerQuit_3_1_0_2( player );
+                Program.GameEngine.EventProxy.OnPlayerQuit_3_2_0_0( player );
             }
             player.Delete();
             if (Program.IsHost && Program.InPreGame)
@@ -577,6 +591,7 @@ namespace Octgn.Networking
                     Program.GameEngine.EventProxy.OnMarkerChanged_3_1_0_1(card, model.ModelString(), oldCount, newCount, isScriptChange);
                 }
                 Program.GameEngine.EventProxy.OnMarkerChanged_3_1_0_2(card, model.Name, model.Id.ToString(), oldCount, isScriptChange);
+                Program.GameEngine.EventProxy.OnMarkerChanged_3_2_0_0(card, model.Name, model.Id.ToString(), oldCount, isScriptChange);
             }
         }
 
@@ -612,6 +627,7 @@ namespace Octgn.Networking
                         Program.GameEngine.EventProxy.OnMarkerChanged_3_1_0_1(card, markerString.ToString(), oldCount, newCount, isScriptChange);
                     }
                     Program.GameEngine.EventProxy.OnMarkerChanged_3_1_0_2(card, name, id.ToString(), oldCount, isScriptChange);
+                    Program.GameEngine.EventProxy.OnMarkerChanged_3_2_0_0(card, name, id.ToString(), oldCount, isScriptChange);
                 }
                 else
                 {
@@ -621,6 +637,7 @@ namespace Octgn.Networking
                         Program.GameEngine.EventProxy.OnMarkerChanged_3_1_0_1(card, marker.Model.ModelString(), oldCount, newCount, isScriptChange);
                     }
                     Program.GameEngine.EventProxy.OnMarkerChanged_3_1_0_2(card, name, id.ToString(), oldCount, isScriptChange);
+                    Program.GameEngine.EventProxy.OnMarkerChanged_3_2_0_0(card, name, id.ToString(), oldCount, isScriptChange);
                 }
 
             }
@@ -698,6 +715,18 @@ namespace Octgn.Networking
                     oldCount,
                     isScriptChange);
                 Program.GameEngine.EventProxy.OnMarkerChanged_3_1_0_2(
+                    to,
+                    marker.Model.Name,
+                    marker.Model.Id.ToString(),
+                    toOldCount,
+                    isScriptChange);
+                Program.GameEngine.EventProxy.OnMarkerChanged_3_2_0_0(
+                    from,
+                    marker.Model.Name,
+                    marker.Model.Id.ToString(),
+                    oldCount,
+                    isScriptChange);
+                Program.GameEngine.EventProxy.OnMarkerChanged_3_2_0_0(
                     to,
                     marker.Model.Name,
                     marker.Model.Id.ToString(),
@@ -795,7 +824,10 @@ namespace Octgn.Networking
             if (!IsLocalPlayer(who))
                 obj.PassControlTo(player, who, false, requested);
             if (obj is Card)
-               Program.GameEngine.EventProxy.OnCardControllerChanged_3_1_0_2((Card)obj, who, player);
+            {
+                Program.GameEngine.EventProxy.OnCardControllerChanged_3_1_0_2((Card)obj, who, player);
+                Program.GameEngine.EventProxy.OnCardControllerChanged_3_2_0_0((Card)obj, who, player);
+            }
         }
 
         public void TakeFrom(ControllableObject obj, Player to)
@@ -978,6 +1010,7 @@ namespace Octgn.Networking
                 Program.GameEngine.EventProxy.OnPlayerGlobalVariableChanged_3_1_0_1(p, name, oldValue, value);
             }
             Program.GameEngine.EventProxy.OnPlayerGlobalVariableChanged_3_1_0_2(p, name, oldValue, value);
+            Program.GameEngine.EventProxy.OnPlayerGlobalVariableChanged_3_2_0_0(p, name, oldValue, value);
         }
 
         public void SetGlobalVariable(string name, string oldValue, string value)
@@ -994,6 +1027,7 @@ namespace Octgn.Networking
             Program.GameEngine.EventProxy.OnGlobalVariableChanged_3_1_0_0(name, oldValue, value);
             Program.GameEngine.EventProxy.OnGlobalVariableChanged_3_1_0_1(name, oldValue, value);
             Program.GameEngine.EventProxy.OnGlobalVariableChanged_3_1_0_2(name, oldValue, value);
+            Program.GameEngine.EventProxy.OnGlobalVariableChanged_3_2_0_0(name, oldValue, value);
 
         }
 
@@ -1038,10 +1072,12 @@ namespace Octgn.Networking
                     Program.GameEngine.EventProxy.OnTableLoad_3_1_0_0();
                     Program.GameEngine.EventProxy.OnTableLoad_3_1_0_1();
                     Program.GameEngine.EventProxy.OnTableLoaded_3_1_0_2();
+                    Program.GameEngine.EventProxy.OnTableLoaded_3_2_0_0();
 
                     Program.GameEngine.EventProxy.OnGameStart_3_1_0_0();
                     Program.GameEngine.EventProxy.OnGameStart_3_1_0_1();
                     Program.GameEngine.EventProxy.OnGameStarted_3_1_0_2();
+                    Program.GameEngine.EventProxy.OnGameStarted_3_2_0_0();
                 }
             }
         }

@@ -203,8 +203,13 @@ namespace Octgn.Test.OctgnApp.Scripting
     {
 
     }
-
+    [Versioned("3.1.0.2")]
     internal class TestType_3_1_0_2 : TestTypeBase
+    {
+
+    }
+    [Versioned("3.2.0.0")]
+    internal class TestType_3_2_0_0 : TestTypeBase
     {
 
     }

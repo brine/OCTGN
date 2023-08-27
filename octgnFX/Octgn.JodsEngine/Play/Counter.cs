@@ -112,6 +112,7 @@ namespace Octgn.Play
             if (notifyServer)
             {
                 Program.GameEngine.EventProxy.OnCounterChanged_3_1_0_2(who, this, oldValue, isScriptChange);
+                Program.GameEngine.EventProxy.OnCounterChanged_3_2_0_0(who, this, oldValue, isScriptChange);
             }
         }
 

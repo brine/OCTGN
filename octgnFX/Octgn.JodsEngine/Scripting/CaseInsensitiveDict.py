@@ -1,6 +1,4 @@
-﻿import collections
-
-class idict(collections.Mapping):
+﻿class idict(_collections.defaultdict):
 
     def __init__(self, pairs): 
         """Constructor: takes an iterable of tuples""" 

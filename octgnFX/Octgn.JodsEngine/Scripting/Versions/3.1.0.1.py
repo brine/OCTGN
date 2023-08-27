@@ -148,7 +148,7 @@ def convertToString(obj):
     return "Card({})".format(obj._id)
   if type(obj) is Counter:
     return "Counter({},{},{})".format(obj._id,obj.name,obj.player._id)
-  if isinstance(obj, basestring):
+  if isinstance(obj, str):
     return "\"{}\"".format(obj);
   return str(obj)
 

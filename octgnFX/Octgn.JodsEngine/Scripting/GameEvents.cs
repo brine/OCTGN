@@ -1643,5 +1643,634 @@ namespace Octgn.Scripting
 				}
 			}
 		}
+	private static readonly Version C_3_2_0_0 = Version.Parse("3.2.0.0");
+		public void OnTableLoaded_3_2_0_0()
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+			}
+			foreach(var e in eventCache["OnTableLoaded"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction);
+				}
+			}
+		}
+		public void OnGameStarted_3_2_0_0()
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+			}
+			foreach(var e in eventCache["OnGameStarted"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction);
+				}
+			}
+		}
+		public void OnPlayerConnected_3_2_0_0(Player player)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.player = player;
+			}
+			foreach(var e in eventCache["OnPlayerConnected"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,player);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnPlayerQuit_3_2_0_0(Player player)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.player = player;
+			}
+			foreach(var e in eventCache["OnPlayerQuit"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,player);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnDeckLoaded_3_2_0_0(Player player, bool isLimited, Group[] groups)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.player = player;
+				args.isLimited = isLimited;
+				args.groups = groups;
+			}
+			foreach(var e in eventCache["OnDeckLoaded"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,player, isLimited, groups);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnCounterChanged_3_2_0_0(Player player, Counter counter, int value, bool scripted)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.player = player;
+				args.counter = counter;
+				args.value = value;
+				args.scripted = scripted;
+			}
+			foreach(var e in eventCache["OnCounterChanged"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,player, counter, value, scripted);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnTurnPaused_3_2_0_0(Player player)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.player = player;
+			}
+			foreach(var e in eventCache["OnTurnPaused"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,player);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnTurnPassed_3_2_0_0(Player player, int turn, bool force)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.player = player;
+				args.turn = turn;
+				args.force = force;
+			}
+			foreach(var e in eventCache["OnTurnPassed"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,player, turn, force);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnCardTargeted_3_2_0_0(Player player, Card card, bool targeted, bool scripted)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.player = player;
+				args.card = card;
+				args.targeted = targeted;
+				args.scripted = scripted;
+			}
+			foreach(var e in eventCache["OnCardTargeted"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,player, card, targeted, scripted);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnCardArrowTargeted_3_2_0_0(Player player, Card fromCard, Card toCard, bool targeted, bool scripted)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.player = player;
+				args.fromCard = fromCard;
+				args.toCard = toCard;
+				args.targeted = targeted;
+				args.scripted = scripted;
+			}
+			foreach(var e in eventCache["OnCardArrowTargeted"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,player, fromCard, toCard, targeted, scripted);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnPlayerGlobalVariableChanged_3_2_0_0(Player player, string name, string oldValue, string value)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.player = player;
+				args.name = name;
+				args.oldValue = oldValue;
+				args.value = value;
+			}
+			foreach(var e in eventCache["OnPlayerGlobalVariableChanged"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,player, name, oldValue, value);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnGlobalVariableChanged_3_2_0_0(string name, string oldValue, string value)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.name = name;
+				args.oldValue = oldValue;
+				args.value = value;
+			}
+			foreach(var e in eventCache["OnGlobalVariableChanged"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,name, oldValue, value);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnCardClicked_3_2_0_0(Card card, int mouseButton, string[] keysDown)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.card = card;
+				args.mouseButton = mouseButton;
+				args.keysDown = keysDown;
+			}
+			foreach(var e in eventCache["OnCardClicked"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,card, mouseButton, keysDown);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnCardDoubleClicked_3_2_0_0(Card card, int mouseButton, string[] keysDown)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.card = card;
+				args.mouseButton = mouseButton;
+				args.keysDown = keysDown;
+			}
+			foreach(var e in eventCache["OnCardDoubleClicked"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,card, mouseButton, keysDown);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnMarkerChanged_3_2_0_0(Card card, string marker, string id, int value, bool scripted)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.card = card;
+				args.marker = marker;
+				args.id = id;
+				args.value = value;
+				args.scripted = scripted;
+			}
+			foreach(var e in eventCache["OnMarkerChanged"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,card, marker, id, value, scripted);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnCardControllerChanged_3_2_0_0(Card card, Player oldPlayer, Player player)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.card = card;
+				args.oldPlayer = oldPlayer;
+				args.player = player;
+			}
+			foreach(var e in eventCache["OnCardControllerChanged"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,card, oldPlayer, player);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnCardsMoved_3_2_0_0(Player player, Card[] cards, Group[] fromGroups, Group[] toGroups, int[] indexs, int[] xs, int[] ys, string[] highlights, string[] markers, bool[] faceups, string[] filters, string[] alternates)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.player = player;
+				args.cards = cards;
+				args.fromGroups = fromGroups;
+				args.toGroups = toGroups;
+				args.indexs = indexs;
+				args.xs = xs;
+				args.ys = ys;
+				args.highlights = highlights;
+				args.markers = markers;
+				args.faceups = faceups;
+				args.filters = filters;
+				args.alternates = alternates;
+			}
+			foreach(var e in eventCache["OnCardsMoved"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,player, cards, fromGroups, toGroups, indexs, xs, ys, highlights, markers, faceups, filters, alternates);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnScriptedCardsMoved_3_2_0_0(Player player, Card[] cards, Group[] fromGroups, Group[] toGroups, int[] indexs, int[] xs, int[] ys, string[] highlights, string[] markers, bool[] faceups, string[] filters, string[] alternates)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.player = player;
+				args.cards = cards;
+				args.fromGroups = fromGroups;
+				args.toGroups = toGroups;
+				args.indexs = indexs;
+				args.xs = xs;
+				args.ys = ys;
+				args.highlights = highlights;
+				args.markers = markers;
+				args.faceups = faceups;
+				args.filters = filters;
+				args.alternates = alternates;
+			}
+			foreach(var e in eventCache["OnScriptedCardsMoved"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,player, cards, fromGroups, toGroups, indexs, xs, ys, highlights, markers, faceups, filters, alternates);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnPhasePassed_3_2_0_0(string name, int id, bool force)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.name = name;
+				args.id = id;
+				args.force = force;
+			}
+			foreach(var e in eventCache["OnPhasePassed"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,name, id, force);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OnPhasePaused_3_2_0_0(Player player)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.player = player;
+			}
+			foreach(var e in eventCache["OnPhasePaused"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,player);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OverrideCardsMoved_3_2_0_0(Card[] cards, Group[] toGroups, int[] indexs, int[] xs, int[] ys, bool[] faceups)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.cards = cards;
+				args.toGroups = toGroups;
+				args.indexs = indexs;
+				args.xs = xs;
+				args.ys = ys;
+				args.faceups = faceups;
+			}
+			foreach(var e in eventCache["OverrideCardsMoved"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,cards, toGroups, indexs, xs, ys, faceups);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OverrideTurnPassed_3_2_0_0(Player player)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.player = player;
+			}
+			foreach(var e in eventCache["OverrideTurnPassed"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,player);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OverrideGameReset_3_2_0_0()
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+			}
+			foreach(var e in eventCache["OverrideGameReset"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction);
+				}
+			}
+		}
+		public void OverrideGameSoftReset_3_2_0_0()
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+			}
+			foreach(var e in eventCache["OverrideGameSoftReset"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction);
+				}
+			}
+		}
+		public void OverridePhasePassed_3_2_0_0(string name, int id)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.name = name;
+				args.id = id;
+			}
+			foreach(var e in eventCache["OverridePhasePassed"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,name, id);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
+		public void OverridePhaseClicked_3_2_0_0(string name, int id)
+		{
+			if(Player.LocalPlayer.Spectator || Program.GameEngine.IsReplay)return;
+			if(MuteEvents)return;
+			if(gameEngine.Definition.ScriptVersion != C_3_2_0_0 )
+				return;
+			var thisVersion = Version.Parse("3.2.0.0");
+			dynamic args = new System.Dynamic.ExpandoObject();
+			if(thisVersion >= BASEOBJECTVERSION)
+			{
+				args.name = name;
+				args.id = id;
+			}
+			foreach(var e in eventCache["OverridePhaseClicked"])
+			{
+				if(thisVersion < BASEOBJECTVERSION)
+					engine.ExecuteFunction(e.PythonFunction,name, id);
+				else
+				{
+					engine.ExecuteFunction(e.PythonFunction, args);
+				}
+			}
+		}
 	}
 }

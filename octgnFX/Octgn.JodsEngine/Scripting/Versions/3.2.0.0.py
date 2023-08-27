@@ -1,6 +1,7 @@
 ﻿from System.IO import Directory, Path
 from System.Collections.Generic import *
 from System import *
+
 #Rotation constants
 Rot0 = 0
 Rot90 = 1
@@ -297,8 +298,7 @@ class Card(object):
 		_api.CardSwitchTo(self._id,alt)
 	@property
 	def alternates(self): return _api.CardAlternates(self._id)
-	def alternateProperty(self,alt,prop): return _api.CardProperty(self._id,alt,prop)
-	def defaultProperty(self, alt, prop): return _api.CardProperty(self._id,alt,prop,True)
+	def alternateProperty(self,alt,prop): return _api.CardAlternateProperty(self._id,alt,prop)
 	@property
 	def model(self): return _api.CardModel(self._id)
 	@property

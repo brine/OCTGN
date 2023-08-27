@@ -153,6 +153,9 @@ namespace Octgn.Scripting
         public ScriptScope CreateScope(string workingDirectory)
         {
             ScriptScope scope = _engine.CreateScope();
+            scope.ImportModule("_collections");
+            scope.ImportModule("_heapq");
+            scope.ImportModule("_bisect");
             InjectOctgnIntoScope(scope, workingDirectory);
             return scope;
         }
@@ -584,12 +587,12 @@ namespace Octgn.Scripting
             // For convenience reason, the definition of Python API objects is in a seperate file: PythonAPI.py
             _engine.Execute(Properties.Resources.CaseInsensitiveDict, scope);
 
-//            _engine.Execute(
-//                @"
-//import clr
-//clr.AddReference(""mscorlib"")
-//",
-//                scope
+            //            _engine.Execute(
+            //                @"
+            //import clr
+            //clr.AddReference(""mscorlib"")
+            //",
+            //                scope
             //);
 
             //_engine.Runtime.LoadAssembly(typeof(Directory).Assembly);

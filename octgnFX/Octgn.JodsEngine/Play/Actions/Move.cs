@@ -213,11 +213,13 @@ namespace Octgn.Play.Actions
                     {
                         Program.GameEngine.EventProxy.OnScriptedMoveCards_3_1_0_1(Who, cards, oldGroups, tos, oldIndexes, indexes, oldX, oldY, x, y, oldHighlights, oldMarkers, oldFaceUps);
                         Program.GameEngine.EventProxy.OnScriptedCardsMoved_3_1_0_2(Who, cards, oldGroups, tos, oldIndexes, oldX, oldY, oldHighlights, oldMarkers, oldFaceUps, oldFilters, oldAlternates);
+                        Program.GameEngine.EventProxy.OnScriptedCardsMoved_3_2_0_0(Who, cards, oldGroups, tos, oldIndexes, oldX, oldY, oldHighlights, oldMarkers, oldFaceUps, oldFilters, oldAlternates);
                     }
                     else
                     {
                         Program.GameEngine.EventProxy.OnMoveCards_3_1_0_1(Who, cards, oldGroups, tos, oldIndexes, indexes, oldX, oldY, x, y, oldHighlights, oldMarkers, oldFaceUps);
                         Program.GameEngine.EventProxy.OnCardsMoved_3_1_0_2(Who, cards, oldGroups, tos, oldIndexes, oldX, oldY, oldHighlights, oldMarkers, oldFaceUps, oldFilters, oldAlternates);
+                        Program.GameEngine.EventProxy.OnCardsMoved_3_2_0_0(Who, cards, oldGroups, tos, oldIndexes, oldX, oldY, oldHighlights, oldMarkers, oldFaceUps, oldFilters, oldAlternates);
                     }
                 }
             }

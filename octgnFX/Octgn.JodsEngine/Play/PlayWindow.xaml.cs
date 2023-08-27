@@ -595,6 +595,7 @@ namespace Octgn.Play
             if (Program.GameEngine.Definition.Events.ContainsKey("OverrideGameReset"))
             {
                 Program.GameEngine.EventProxy.OverrideGameReset_3_1_0_2();
+                Program.GameEngine.EventProxy.OverrideGameReset_3_2_0_0();
                 return;
             }
             this.Reset(false);
@@ -605,6 +606,7 @@ namespace Octgn.Play
             if (Program.GameEngine.Definition.Events.ContainsKey("OverrideGameSoftReset"))
             {
                 Program.GameEngine.EventProxy.OverrideGameSoftReset_3_1_0_2();
+                Program.GameEngine.EventProxy.OverrideGameSoftReset_3_2_0_0();
                 return;
             }
             this.Reset(true);
@@ -866,6 +868,7 @@ namespace Octgn.Play
                 if (Program.GameEngine.Definition.Events.ContainsKey("OverrideTurnPassed"))
                 {
                     Program.GameEngine.EventProxy.OverrideTurnPassed_3_1_0_2(targetPlayer);
+                    Program.GameEngine.EventProxy.OverrideTurnPassed_3_2_0_0(targetPlayer);
                     return;
                 }
                 Program.Client.Rpc.NextTurn(targetPlayer, true, false);
@@ -884,6 +887,7 @@ namespace Octgn.Play
             if (Program.GameEngine.Definition.Events.ContainsKey("OverridePhaseClicked"))
             {
                 Program.GameEngine.EventProxy.OverridePhaseClicked_3_1_0_2(phase.Name, phase.Id);
+                Program.GameEngine.EventProxy.OverridePhaseClicked_3_2_0_0(phase.Name, phase.Id);
                 return;
             }
             phase.Hold = !phase.Hold;
