@@ -587,12 +587,6 @@ namespace Octgn.Core
             set { Config.Instance.WriteValue("ContextFontSize", value); }
         }
 
-        public static bool SpectateGames
-        {
-            get { return Config.Instance.ReadValue("SpectateGames", false); }
-            set { Config.Instance.WriteValue("SpectateGames", value); }
-        }
-
         public static bool UnderstandsChat
         {
             get { return Config.Instance.ReadValue("UnderstandsChat", false); }
@@ -647,6 +641,16 @@ namespace Octgn.Core
         public static string DeviceId {
             get { return Config.Instance.ReadValue(nameof(DeviceId), Guid.NewGuid().ToString()); }
             set { Config.Instance.WriteValue(nameof(DeviceId), value); }
+        }
+        public static bool ShowAltsInDeckEditor
+        {
+            get { return Config.Instance.ReadValue("ShowAltsInDeckEditor", false); }
+            set { Config.Instance.WriteValue("ShowAltsInDeckEditor", value); }
+        }
+
+        public static bool InGameChatTextShadows {
+            get { return Config.Instance.ReadValue("InGameChatTextShadows", false); }
+            set { Config.Instance.WriteValue("InGameChatTextShadows", value); }
         }
     }
 }
